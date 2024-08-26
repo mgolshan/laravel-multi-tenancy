@@ -39,12 +39,14 @@ class RegisteredUserController extends Controller
             'subdomain' => ['required', 'regex:/^[a-zA-Z][a-zA-Z0-9]*$/', 'unique:domains,domain'],
         ]);
 
+        /** @var User $user */
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
+        /** @var Tenant $tenant */
         $tenant = Tenant::create([
             'name' => $request->name,
         ]);
@@ -55,7 +57,8 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+        $url = 'https://' . $domain . route('dashboard', absolute: false);
 
-        return redirect('https://' . $domain . route('dashboard', absolute: false));
+        return redirect($url);
     }
 }

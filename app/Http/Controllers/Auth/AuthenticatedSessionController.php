@@ -37,10 +37,11 @@ class AuthenticatedSessionController extends Controller
         /** @var User $user */
         $user = $request->user();
         $tenant = $user->firstTenant();
-        $domain = $tenant ? $tenant->firstDomain() : config('app.domain');
+        $domain = $tenant ? $tenant->firstDomain()->domain : config('app.domain');
 
-        return redirect('https://' . $domain . route('dashboard', absolute: false));
-//        return redirect()->intended(route('dashboard', absolute: false));
+        $url = 'https://' . $domain . route('dashboard', absolute: false);
+
+        return redirect($url);
     }
 
     /**
@@ -54,6 +55,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect(config('app.url'));
+        return redirect(route('home'));
     }
 }
