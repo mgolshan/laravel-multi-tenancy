@@ -23,6 +23,11 @@ To run migrations for tenants, specify the path:
 `php artisan migrate --path=database/migrations/tenant`
 
 ### Example codes:
-The project comes with basic project and task management features for the sake of providing a few example.
+The project comes with basic project and task management features for the sake of providing a few examples.
 
-It also includes breeze auth with inertia vue3.
+It also includes breeze auth UI with inertia vue3.
+
+### How it works:
+The main domain allows users to register along with a unique subdomain. After registering, the user will be redirected to the dashboard page under the subdomain host address.
+
+The next time a registered user signs in, the user will be redirected to the subdomain dashboard.
